@@ -118,17 +118,31 @@ public class Customer_Service {
 		if(customer_DTO.getCustomer_Gender().equalsIgnoreCase("male")) System.out.println("Helloo mr's : "+customer_DTO.getCustomer_Name());
 		if(customer_DTO.getCustomer_Gender().equalsIgnoreCase("female")) System.out.println("Helloo miss : "+customer_DTO.getCustomer_Name());
 		
-		System.out.println("Enter....\n 1.For All Product Details  \n 2.For Cart Details  \n 3.For Order Details");
-		int choice=sc.nextInt();
-		switch(choice)
+		boolean condn=true;
+		boolean condn2=true;
+		while(condn)
 		{
-		case 1:{
-				System.out.println("Product Details");
-				List<Product_DTO> allProductDetails=product_Service.allProductDetails();
-				int i=1;
-				for(Product_DTO product_DTO:allProductDetails)
-				{
-					System.out.println("slno: "+i++);
+			System.out.println("Enter....\n 1.For All Product Details  \n 2.For Cart Details  \n 3.For Order Details \n 4.Exit");
+			switch(sc.nextInt())
+			{
+			case 1:{
+					System.out.println("Product Details");
+					List<Product_DTO> allProductDetails=product_Service.allProductDetails();
+					int i=1;
+					for(Product_DTO product_DTO:allProductDetails)
+					{
+						System.out.println("slno: "+i++);
+						System.out.println("Product Name: "+product_DTO.getProduct_Name());
+						System.out.println("Product Brand: "+product_DTO.getProduct_Brand());
+						System.out.println("Product Price: "+product_DTO.getProduct_Price());
+						System.out.println("Product Category: "+product_DTO.getProduct_Catagory());
+						System.out.println("Product MF Date: "+product_DTO.getProduct_EXP_Date());
+						System.out.println("Product EXP Date: "+product_DTO.getProduct_EXP_Date());
+						System.out.println("Product Discount: "+product_DTO.getProduct_Discount());
+						System.out.println("....................................................");
+					}
+					System.out.println("select s.No To add to cart Or buy....");
+					Product_DTO product_DTO=allProductDetails.get(sc.nextInt()-1);
 					System.out.println("Product Name: "+product_DTO.getProduct_Name());
 					System.out.println("Product Brand: "+product_DTO.getProduct_Brand());
 					System.out.println("Product Price: "+product_DTO.getProduct_Price());
@@ -136,105 +150,106 @@ public class Customer_Service {
 					System.out.println("Product MF Date: "+product_DTO.getProduct_EXP_Date());
 					System.out.println("Product EXP Date: "+product_DTO.getProduct_EXP_Date());
 					System.out.println("Product Discount: "+product_DTO.getProduct_Discount());
-					System.out.println("....................................................");
-				}
-				System.out.println("select s.No To add to cart Or buy....");
-				Product_DTO product_DTO=allProductDetails.get(sc.nextInt()-1);
-				System.out.println("Product Name: "+product_DTO.getProduct_Name());
-				System.out.println("Product Brand: "+product_DTO.getProduct_Brand());
-				System.out.println("Product Price: "+product_DTO.getProduct_Price());
-				System.out.println("Product Category: "+product_DTO.getProduct_Catagory());
-				System.out.println("Product MF Date: "+product_DTO.getProduct_EXP_Date());
-				System.out.println("Product EXP Date: "+product_DTO.getProduct_EXP_Date());
-				System.out.println("Product Discount: "+product_DTO.getProduct_Discount());
-				
-				System.out.println("select \n 1.To add the product into cart \n 2.To Buy");
-				switch (sc.nextInt()) {
-				case 1:
-				{
-					System.out.println("Adding the product into cart");
-					System.out.println("Enter Product quantity");
-					int quantity=sc.nextInt();
-					Cart_DTO cart_DTO=new Cart_DTO();
-					cart_DTO.setCustomer_Id(customer_DTO.getCustomer_Id());
-					cart_DTO.setProduct_Id(product_DTO.getProduct_Id());
-					cart_DTO.setProduct_Quantity(quantity);
-					cart_Service.addCartDetails(cart_DTO);
-				}
-					break;
-				case 2:
-				{
-					Payment_Service payment_Service=new Payment_Service();
-					Order_Service order_Service=new Order_Service();
-					System.out.println("Purchaging the product from cart");
-					System.out.println("Enter the product quantity...");
-					int quantity=sc.nextInt();
-					System.out.println("Product Name: "+product_DTO.getProduct_Name());
-					System.out.println("Product Brand: "+product_DTO.getProduct_Brand());
-					System.out.println("Product Price: "+product_DTO.getProduct_Price());
-					System.out.println("Product catogary: "+product_DTO.getProduct_Catagory());
-					double totalPrice= product_DTO.getProduct_Price()*quantity;
-					double discount=totalPrice*product_DTO.getProduct_Discount()/100;
-					double amountToPay=totalPrice-discount;
-					System.out.println("Total Price: "+totalPrice);
-					System.out.println("Total Discount: "+discount);
-					System.out.println("Total amount should pay: "+amountToPay);
-					System.out.println("..................................");
-					if(payment_Service.paymentProcessDetails(customer_DTO.getCustomer_Id(),product_DTO.getProduct_Id(),amountToPay))
+					
+					while(condn2)
 					{
-						order_Service.addOrderDetails(customer_DTO.getCustomer_Id(), product_DTO.getProduct_Id(), quantity);
-					}
-					else System.err.println("Payment failed.......");
-				}
-					break;
+						System.out.println("select \n 1.To add the product into cart \n 2.To Buy \n 3.Exit");
+						switch (sc.nextInt()) {
+						case 1:
+						{
+							System.out.println("Adding the product into cart");
+							System.out.println("Enter Product quantity");
+							int quantity=sc.nextInt();
+							Cart_DTO cart_DTO=new Cart_DTO();
+							cart_DTO.setCustomer_Id(customer_DTO.getCustomer_Id());
+							cart_DTO.setProduct_Id(product_DTO.getProduct_Id());
+							cart_DTO.setProduct_Quantity(quantity);
+							cart_Service.addCartDetails(cart_DTO);
+						}
+							break;
+						case 2:
+						{
+							Payment_Service payment_Service=new Payment_Service();
+							Order_Service order_Service=new Order_Service();
+							System.out.println("Purchaging the product from cart");
+							System.out.println("Enter the product quantity...");
+							int quantity=sc.nextInt();
+							System.out.println("Product Name: "+product_DTO.getProduct_Name());
+							System.out.println("Product Brand: "+product_DTO.getProduct_Brand());
+							System.out.println("Product Price: "+product_DTO.getProduct_Price());
+							System.out.println("Product catogary: "+product_DTO.getProduct_Catagory());
+							double totalPrice= product_DTO.getProduct_Price()*quantity;
+							double discount=totalPrice*product_DTO.getProduct_Discount()/100;
+							double amountToPay=totalPrice-discount;
+							System.out.println("Total Price: "+totalPrice);
+							System.out.println("Total Discount: "+discount);
+							System.out.println("Total amount should pay: "+amountToPay);
+							System.out.println("..................................");
+							if(payment_Service.paymentProcessDetails(customer_DTO.getCustomer_Id(),product_DTO.getProduct_Id(),amountToPay))
+							{
+								order_Service.addOrderDetails(customer_DTO.getCustomer_Id(), product_DTO.getProduct_Id(), quantity);
+							}
+							else System.err.println("Payment failed.......");
+						}break;
+						
+						case 3:{
+							condn2=false;
+						}break;
 
-				default: System.out.println("Invalid choice...enter again");
-				}
-				 
-		}
-		break;
-		
-		case 2:{
-				System.out.println("Cart Details");
-				List<Cart_DTO> allCartDetails=cart_Service.allCartDetails();
-				System.out.println("Hello Mr/Miss "+customer_DTO.getCustomer_Name()+"....Here is your cart details");
-				System.out.println("=============================================");
-				for(Cart_DTO cart_DTO:allCartDetails)
-				{
-					if(customer_DTO.getCustomer_Id()==cart_DTO.getCustomer_Id())
+						default: System.out.println("Invalid choice...enter again");
+						}
+					}
+					 
+			}
+			break;
+			
+			case 2:{
+					System.out.println("Cart Details");
+					List<Cart_DTO> allCartDetails=cart_Service.allCartDetails();
+					System.out.println("Hello Mr/Miss "+customer_DTO.getCustomer_Name()+"....Here is your cart details");
+					System.out.println("=============================================");
+					for(Cart_DTO cart_DTO:allCartDetails)
 					{
-						System.out.println("Cart ID: "+cart_DTO.getCart_Id());
-						System.out.println("Product ID: "+cart_DTO.getProduct_Id());
-						System.out.println("Customer ID: "+cart_DTO.getCustomer_Id());
-						System.out.println("Product Quantity: "+cart_DTO.getProduct_Quantity());
-						System.out.println("---------------------------------------------------");
+						if(customer_DTO.getCustomer_Id()==cart_DTO.getCustomer_Id())
+						{
+							System.out.println("Cart ID: "+cart_DTO.getCart_Id());
+							System.out.println("Product ID: "+cart_DTO.getProduct_Id());
+							System.out.println("Customer ID: "+cart_DTO.getCustomer_Id());
+							System.out.println("Product Quantity: "+cart_DTO.getProduct_Quantity());
+							System.out.println("---------------------------------------------------");
+						}
+						
 					}
 					
-				}
-				
-		}
-		break;
-		
-		case 3:{
-				System.out.println("Order Details");
-				List<Order_DTO> allOrderDetails=order_Service.getOrderDetails();
-				System.out.println("Hello Mr/Miss "+customer_DTO.getCustomer_Name()+"....Here is your Order details");
-				for(Order_DTO order_DTO:allOrderDetails)
-				{
-					if(customer_DTO.getCustomer_Id()==order_DTO.getCustomer_Id())
+			}
+			break;
+			
+			case 3:{
+					System.out.println("Order Details");
+					List<Order_DTO> allOrderDetails=order_Service.getOrderDetails();
+					System.out.println("Hello Mr/Miss "+customer_DTO.getCustomer_Name()+"....Here is your Order details");
+					for(Order_DTO order_DTO:allOrderDetails)
 					{
-						System.out.println("Order ID: "+order_DTO.getOrder_Id());
-						System.out.println("Customer ID: "+order_DTO.getCustomer_Id());
-						System.out.println("Product ID: "+order_DTO.getProduct_Id());
-						System.out.println("Product Quantity: "+order_DTO.getProduct_Quantity());
-						System.out.println("Order Address: "+order_DTO.getOrder_Address());
-						System.out.println("Order Date: "+order_DTO.getOrder_Date());
-						System.out.println("------------------------------------------------");
+						if(customer_DTO.getCustomer_Id()==order_DTO.getCustomer_Id())
+						{
+							System.out.println("Order ID: "+order_DTO.getOrder_Id());
+							System.out.println("Customer ID: "+order_DTO.getCustomer_Id());
+							System.out.println("Product ID: "+order_DTO.getProduct_Id());
+							System.out.println("Product Quantity: "+order_DTO.getProduct_Quantity());
+							System.out.println("Order Address: "+order_DTO.getOrder_Address());
+							System.out.println("Order Date: "+order_DTO.getOrder_Date());
+							System.out.println("------------------------------------------------");
+						}
 					}
-				}
-		}
-		break;
-		default:System.out.println("Invalid choice....");
+			}break;
+			
+			case 4:{
+				condn=false;
+				System.out.println("Here is the Main Menu");
+			}
+			break;
+			default:System.out.println("Invalid choice....");
+			}
 		}
 		
 		}
