@@ -72,8 +72,9 @@ public class Admin_Service {
 		boolean adminLogin=admin_DAO.selectAdminDetailsByUsingEmailAndPAssword(email, passsword);
 		
 		if(adminLogin) {
+			boolean condn=true;
 			System.out.println("Admin login successful.....");
-			System.out.println("Enter....\n 1.To insert product details \n 2.To insert product based on brand");
+			System.out.println("Enter....\n 1.To insert product details \n 2.To insert product based on brand  \n 3.Exit");
 			
 			switch(sc.nextInt())
 			{
@@ -89,6 +90,12 @@ public class Admin_Service {
 				product_Service.insertProductBasedOnBrand();
 			}
 			break;
+			
+			case 3:
+			{
+				condn=false;
+				System.out.println("Here Is The main menu");
+			}break;
 			
 			default:System.out.println("Choose valid option....");
 			}
