@@ -12,35 +12,43 @@ public class Main {
 		Scanner sc=new Scanner(System.in);
 		Customer_Service customer_Service=new Customer_Service();
 		welcome();
-		System.out.println("Enter \n 1.For Admin Login \n 2.For Customer Registration \n 3.For Customer Login ");
-		switch(sc.nextInt())
+		boolean condn=true;
+		while(condn)
 		{
-		case 1:
-		{
-			Admin_Service admin_Service=new Admin_Service();
-			System.out.println("Admin Login");
-			if(startingYesOrNo()) admin_Service.adminLogin();
-			else thankYou();
-		} break;
+			System.out.println("Enter \n 1.For Admin Login \n 2.For Customer Registration \n 3.For Customer Login \n 4.Exit");
+			switch(sc.nextInt())
+			{
+			case 1:
+			{
+				Admin_Service admin_Service=new Admin_Service();
+				System.out.println("Admin Login");
+				admin_Service.adminLogin();
+			}   break;
+					
+			case 2: 
+			{
+				System.out.println("Customer registration");
+				customer_Service.customer_Registration();
+			} break;
+					
+		
+			case 3: 
+			{
+				System.out.println("Customer Login");
+				customer_Service.customerLogin();
 				
-		case 2: 
-		{
-			System.out.println("Customer registration");
-			if(startingYesOrNo()) customer_Service.customer_Registration();
-			else thankYou();
-		} break;
+			}break;
 				
-	
-		case 3: 
-		{
-			System.out.println("Customer Login");
-			if(startingYesOrNo()) customer_Service.customerLogin();
-			else thankYou();
-		}break;
-				
-		default:System.out.println("Invalid request");
+			case 4 :
+			{
+				System.out.println("Exit");
+				thankYou();
+				condn=false;
+			}break;
+			
+			default:System.out.println("Invalid request");
+			}
 		}
-		sc.close();
 	}
 	
 	private static void thankYou()
@@ -56,14 +64,6 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	private static boolean startingYesOrNo()
-	{
-		Scanner sc=new Scanner(System.in);
-		System.out.println("Do You want to continue....Enter \n yes \n no");
-		if(sc.next().equalsIgnoreCase("yes")) return true;
-		else return false;
 	}
 	
 	private static void welcome()
