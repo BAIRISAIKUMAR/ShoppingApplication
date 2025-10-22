@@ -33,7 +33,7 @@ public class Order_DAO
 					order_DTO.setProduct_Id(resultSet.getInt("Product_Id"));
 					order_DTO.setProduct_Quantity(resultSet.getInt("Product_Quantity"));
 					order_DTO.setOrder_Address(resultSet.getString("Order_Address"));
-					order_DTO.setOrder_Date(Date.valueOf("Order_Date"));
+					order_DTO.setOrder_Date(resultSet.getDate("Order_Date"));
 					lostOfOrders.add(order_DTO);
 				
 				}
